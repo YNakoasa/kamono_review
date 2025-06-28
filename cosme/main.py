@@ -1,5 +1,5 @@
 def main():
-    print("今日は12月8日ですうわああ")
+    print("今日は")
 
 
 if __name__ == "__main__":
