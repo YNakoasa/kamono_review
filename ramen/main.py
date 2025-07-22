@@ -11,6 +11,7 @@ RAMEN_SHOPS = [
      "price_range": "830-1130円",
      "toppings": ["チャーシュー", "ほうれん草", "海苔", "ネギ", "野菜盛り", "味玉", "うずら"],
      "map_url": "https://www.google.com/maps/place/%E6%A8%AA%E6%B5%9C%E5%AE%B6%E7%B3%BB%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3+%E9%87%91%E6%B2%A2+%E9%AD%82%E5%BF%83%E5%AE%B6/@36.5947142,136.6356219,17z/data=!3m1!4b1!4m6!3m5!1s0x5ff9cccc1b7bf9f1:0x23df69073d72f517!8m2!3d36.5947142!4d136.6356219!16s%2Fg%2F11byx84tzn?authuser=0&hl=ja&entry=ttu&g_ep=EgoyMDI1MDcwNi4wIKXMDSoASAFQAw%3D%3D"},
+]
 
 app = Flask(__name__)
 
