@@ -16,8 +16,8 @@ RAMEN_SHOPS = [
 app = Flask(__name__)
 
 
-CHANNEL_ACCESS_TOKEN = "YOUR_CHANNEL_ACCESS_TOKEN" # ここに取得したアクセストークンを貼り付ける
-CHANNEL_SECRET = "YOUR_CHANNEL_SECRET" # ここに取得したチャンネルシークレットを貼り付ける
+CHANNEL_ACCESS_TOKEN = "d5OWpzpXaII/6zbgSs9VBvbtrhLXsxwu2XhG4wc0bOZVqtIEuqlm/s4wobWG8EYJQRc3U6r0DgB5S9RDelyeM7shusJBAJZaRTw0JBw5OdOsdcVzqhxmY3ncj4XzXos842Vw/wq2kmx0Nfe8CpzzdAdB04t89/1O/w1cDnyilFU=" # ここに取得したアクセストークンを貼り付ける
+CHANNEL_SECRET = "fd4b9c96ec6bdc2a9c2ce53d6c8934d8" # ここに取得したチャンネルシークレットを貼り付ける
 
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
