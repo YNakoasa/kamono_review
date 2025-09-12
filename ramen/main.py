@@ -4,14 +4,32 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 # ラーメン屋のデータ
-RAMEN_SHOPS = [
-    {"name": "魂心家",
-     "area": "〒920-0064 石川県金沢市南新保町ト２３−１",
-     "type": "家系",
-     "price_range": "830-1130円",
-     "toppings": ["チャーシュー", "ほうれん草", "海苔", "ネギ", "野菜盛り", "味玉", "うずら"],
-     "map_url": "https://www.google.com/maps/place/%E6%A8%AA%E6%B5%9C%E5%AE%B6%E7%B3%BB%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3+%E9%87%91%E6%B2%A2+%E9%AD%82%E5%BF%83%E5%AE%B6/@36.5947142,136.6356219,17z/data=!3m1!4b1!4m6!3m5!1s0x5ff9cccc1b7bf9f1:0x23df69073d72f517!8m2!3d36.5947142!4d136.6356219!16s%2Fg%2F11byx84tzn?authuser=0&hl=ja&entry=ttu&g_ep=EgoyMDI1MDcwNi4wIKXMDSoASAFQAw%3D%3D"},
-]
+import csv #ラーメン屋情報いれたcsvファイルを読み込むためのやつ
+CSV_FILE_PATH="ramen_list.csv"
+
+def load_ramen_list_from_csv(file_path):
+    ramen_shops = []
+    try:
+        with open(file_path, 'r', encoding = 'utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader: 
+                if 'toppings' in row and row['toppings']:
+                    row['toppings'] = [t.strip() for t in row['toppings'].split(',')]
+                else:
+                    row['toppings'] = []
+
+                if 'notes' in row:
+                    del row['notes']
+
+                ramen_shops.append(row)
+    except FileNotFoundError:
+        print(f"エラー: CSVファイルが見つかりません。パスを確認してください: {file_path}")
+    except Exception as e:
+        print(f"エラー: CSVファイルの読み込み中に問題が発生しました: {e}")
+    return ramen_shops
+
+RAMEN_SHOPS = load_ramen_list_from_csv(CSV_FILE_PATH)
+
 
 app = Flask(__name__)
 
@@ -56,7 +74,7 @@ def handle_message(event):
             found_shops.append(shop)
 
     if found_shops:
-        reply_message = "以下のラーメン屋がおすすめです:\n"
+        reply_message = "以下のラーメン屋がおすすめです:\n\n"
         for shop in found_shops:
             reply_message += f"店名: {shop['name']}\n"
             reply_message += f"エリア: {shop['area']}\n"
@@ -64,6 +82,9 @@ def handle_message(event):
             reply_message += f"価格帯: {shop['price_range']}\n"
             reply_message += "トッピング: " + ", ".join(shop["toppings"]) + "\n"
             reply_message += f"地図リンク: {shop['map_url']}\n\n"
+    else:
+        reply_message = "( ﾟДﾟ)"
+
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=reply_message)
